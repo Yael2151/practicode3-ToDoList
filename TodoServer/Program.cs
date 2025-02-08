@@ -15,9 +15,13 @@ builder.Services.AddCors(options =>
 });
 
 // הזרקת DbContext לאפליקציה
+// builder.Services.AddDbContext<ToDoDbContext>(options =>
+//     options.UseMySql("Server=localhost;Database=schema1;User=root;Password=170180;",
+//     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")));
+
+var connectionString = builder.Configuration.GetConnectionString("ToDoDB");
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql("Server=localhost;Database=schema1;User=root;Password=170180;",
-    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
